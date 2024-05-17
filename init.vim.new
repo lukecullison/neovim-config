@@ -6,17 +6,8 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'neovim/nvim-lspconfig'
 
-" Add color scheme plugins
+" Theme
 Plug 'folke/tokyonight.nvim'
-Plug 'morhetz/gruvbox'
-Plug 'dracula/vim', { 'as': 'dracula' }
-Plug 'altercation/vim-colors-solarized'
-Plug 'arcticicestudio/nord-vim'
-Plug 'Th3Whit3Wolf/one-nvim'
-Plug 'ayu-theme/ayu-vim'
-Plug 'mhartington/oceanic-next'
-Plug 'sainnhe/everforest'
-Plug 'drewtempelmeyer/palenight.vim'
 
 " File Explorer
 Plug 'kyazdani42/nvim-tree.lua'
@@ -48,14 +39,7 @@ set tabstop=4
 set cursorline
 
 " Theme settings
-colorscheme tokyonight 
-" colorscheme gruvbox   " Gruvbox: A retro-groove color scheme with a focus on contrast and readability.
-" colorscheme dracula   " Dracula: A dark theme that is elegant and easy on the eyes.
-" colorscheme nord      " Nord: An arctic, north-bluish color palette.
-" colorscheme ayu       " Ayu: A simple, bright, and elegant theme.
-" colorscheme OceanicNext " Oceanic Next: A beautiful, calm, and simple theme.
-" colorscheme everforest " Everforest: A pastel-colored, low-contrast theme - easy on the eyes.
-" colorscheme palenight " Palenight: A sophisticated and vibrant color scheme.
+colorscheme tokyonight
 
 " Nvim Tree setup
 lua << EOF
