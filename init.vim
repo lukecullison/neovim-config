@@ -18,10 +18,12 @@ Plug 'mhartington/oceanic-next'
 Plug 'sainnhe/everforest'
 Plug 'drewtempelmeyer/palenight.vim'
 
-" File Explorer
+" Add color scheme plugins
+Plug 'sickill/vim-monokai'
+Plug 'kaicataldo/material.vim'
+Plug 'tomasiser/vim-code-dark'
+Plug 'haishanh/night-owl.vim'
 Plug 'kyazdani42/nvim-tree.lua'
-
-" Git Integration
 Plug 'tpope/vim-fugitive'
 Plug 'lewis6991/gitsigns.nvim'
 
@@ -56,6 +58,12 @@ colorscheme tokyonight
 " colorscheme OceanicNext " Oceanic Next: A beautiful, calm, and simple theme.
 " colorscheme everforest " Everforest: A pastel-colored, low-contrast theme - easy on the eyes.
 " colorscheme palenight " Palenight: A sophisticated and vibrant color scheme.
+
+" colorscheme monokai     " Monokai: A popular theme with vibrant colors, including shades of orange.
+" colorscheme material    " Material: A theme with a dark background and orange accents.
+" colorscheme gruvbox     " Gruvbox: A retro-groove color scheme with dark and light modes.
+" colorscheme codedark    " Dark+: A theme inspired by the default dark theme of Visual Studio Code.
+" colorscheme night-owl   " Night Owl: A theme designed to be easy on the eyes
 
 " Nvim Tree setup
 lua << EOF
