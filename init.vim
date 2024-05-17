@@ -93,9 +93,12 @@ lua << EOF
   local cmp = require'cmp'
 
   cmp.setup({
+    completion = {
+      autocomplete = { require'cmp.types'.cmp.TriggerEvent.TextChanged }, -- Enable automatic popup on text change
+    },
     snippet = {
       expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body) -- For `vim-vsnip` users.
+        -- No snippet expansion for minimal config
       end,
     },
     mapping = {
@@ -108,12 +111,13 @@ lua << EOF
         c = cmp.mapping.close(),
       }),
       ['<CR>'] = cmp.mapping.confirm({ select = true }),
-      ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 's' }),
-      ['<S-Tab>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 's' }),
+      ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }), { 'i', 's' }),
+      ['<S-Tab>'] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }), { 'i', 's' }),
+      ['('] = function(fallback) fallback() end, -- Do nothing when '(' is pressed
+      ['{'] = function(fallback) fallback() end, -- Do nothing when '{' is pressed
     },
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
-      { name = 'vsnip' }, -- For vsnip users.
     }, {
       { name = 'buffer' },
     })
@@ -140,4 +144,3 @@ EOF
 lua << EOF
 require'lspconfig'.pyright.setup{}
 EOF
-
