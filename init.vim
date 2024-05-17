@@ -48,9 +48,13 @@ set expandtab
 set shiftwidth=4
 set tabstop=4
 set cursorline
+set ignorecase  " Always ignore case during search
+set smartcase   " Override ignorecase if search pattern contains uppercase letters 
 
 " Theme settings
-colorscheme tokyonight 
+syntax enable
+set background=dark
+" colorscheme tokyonight 
 " colorscheme gruvbox   " Gruvbox: A retro-groove color scheme with a focus on contrast and readability.
 " colorscheme dracula   " Dracula: A dark theme that is elegant and easy on the eyes.
 " colorscheme nord      " Nord: An arctic, north-bluish color palette.
@@ -61,7 +65,7 @@ colorscheme tokyonight
 
 " colorscheme monokai     " Monokai: A popular theme with vibrant colors, including shades of orange.
 " colorscheme material    " Material: A theme with a dark background and orange accents.
-" colorscheme gruvbox     " Gruvbox: A retro-groove color scheme with dark and light modes.
+colorscheme gruvbox     " Gruvbox: A retro-groove color scheme with dark and light modes.
 " colorscheme codedark    " Dark+: A theme inspired by the default dark theme of Visual Studio Code.
 " colorscheme night-owl   " Night Owl: A theme designed to be easy on the eyes
 
