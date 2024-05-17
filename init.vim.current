@@ -1,0 +1,54 @@
+" Initialize vim-plug
+call plug#begin('~/.local/share/nvim/plugged')
+
+" Simple and essential plugins
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'neovim/nvim-lspconfig'
+
+" Theme
+Plug 'folke/tokyonight.nvim'
+
+" File Explorer
+Plug 'kyazdani42/nvim-tree.lua'
+
+" Git Integration
+Plug 'tpope/vim-fugitive'
+Plug 'lewis6991/gitsigns.nvim'
+
+" Status Line
+Plug 'hoob3rt/lualine.nvim'
+
+" End vim-plug setup
+call plug#end()
+
+" General Settings
+set number
+set termguicolors
+set expandtab
+set shiftwidth=4
+set tabstop=4
+set cursorline
+
+" Theme settings
+colorscheme tokyonight
+
+" Nvim Tree setup
+lua << EOF
+require'nvim-tree'.setup {}
+EOF
+
+" Gitsigns setup
+lua << EOF
+require('gitsigns').setup()
+EOF
+
+" Lualine setup
+lua << EOF
+require('lualine').setup {
+  options = {
+    theme = 'tokyonight'
+  }
+}
+EOF
+
