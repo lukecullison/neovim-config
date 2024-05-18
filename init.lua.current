@@ -41,7 +41,7 @@ require('packer').startup(function(use)
   use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-nvim-lsp'
   use 'saadparwaiz1/cmp_luasnip'
-  use 'hrsh7th/cmp-buffer'
+  use 'L3MON4D3/LuaSnip'
   use 'nvim-treesitter/nvim-treesitter'
 
   -- Golang
@@ -56,12 +56,11 @@ require('packer').startup(function(use)
   use 'tpope/vim-fugitive'
   use 'junegunn/gv.vim'
   use 'windwp/nvim-autopairs'
-  use 'nvim-lualine/lualine.nvim' -- Status line plugin
 end)
 
 -- Colorscheme setup
 vim.g.gruvbox_contrast_dark = 'hard'  -- Options: 'soft', 'medium', 'hard'
-vim.g.gruvbox_contrast_light = 'medium' -- Options: 'soft', 'medium', 'hard'
+vim.g.gruvbox_contrast_light = 'soft' -- Options: 'soft', 'medium', 'hard'
 vim.g.gruvbox_invert_selection = '0'
 -- vim.cmd('colorscheme gruvbox') -- Set your default colorscheme here
 vim.cmd('colorscheme tokyonight') -- Set your default colorscheme here
@@ -80,7 +79,7 @@ local cmp = require'cmp'
 cmp.setup({
   snippet = {
     expand = function(args)
-      -- require('luasnip').lsp_expand(args.body) -- Remove LuaSnip
+      require('luasnip').lsp_expand(args.body)
     end,
   },
   mapping = {
@@ -92,16 +91,10 @@ cmp.setup({
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     }),
-    ['<Tab>'] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Insert,
-      select = true,
-    }),
-    ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-    ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
   },
   sources = {
     { name = 'nvim_lsp' },
-    { name = 'buffer' },
+    { name = 'luasnip' },
   },
 })
 
@@ -115,32 +108,4 @@ require'nvim-treesitter.configs'.setup {
 
 -- Autopairs setup
 require('nvim-autopairs').setup{}
-
--- Lualine setup for status line
-require('lualine').setup {
-  options = {
-    icons_enabled = true,
-    theme = 'tokyonight',
-    component_separators = { left = '', right = ''},
-    section_separators = { left = '', right = ''},
-  },
-  sections = {
-    lualine_a = {'mode'},
-    lualine_b = {'branch'},
-    lualine_c = {'filename'},
-    lualine_x = {'encoding', 'fileformat', 'filetype'},
-    lualine_y = {'progress'},
-    lualine_z = {'location'}
-  },
-  inactive_sections = {
-    lualine_a = {},
-    lualine_b = {},
-    lualine_c = {'filename'},
-    lualine_x = {'location'},
-    lualine_y = {},
-    lualine_z = {}
-  },
-  tabline = {},
-  extensions = {}
-}
 
