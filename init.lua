@@ -2,6 +2,12 @@
 vim.cmd('syntax enable')
 vim.cmd('set background=dark')
 
+-- Tab settings
+vim.o.expandtab = true   -- Use spaces instead of tabs
+vim.o.shiftwidth = 4     -- Size of an indent
+vim.o.tabstop = 4        -- Number of spaces tabs count for
+vim.o.softtabstop = 4    -- Number of spaces tabs count for while editing
+
 -- Install packer.nvim if not installed
 local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
