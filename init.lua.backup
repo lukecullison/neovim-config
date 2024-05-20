@@ -1,4 +1,3 @@
-vim.cmd('colorscheme gruvbox') -- Set your default colorscheme here
 -- Basic settings
 vim.cmd('syntax enable')
 vim.cmd('set background=dark')
@@ -8,10 +7,6 @@ vim.o.expandtab = true   -- Use spaces instead of tabs
 vim.o.shiftwidth = 4     -- Size of an indent
 vim.o.tabstop = 4        -- Number of spaces tabs count for
 vim.o.softtabstop = 4    -- Number of spaces tabs count for while editing
-
--- Search settings
-vim.o.ignorecase = true  -- Case insensitive searching
-vim.o.smartcase = true   -- Case sensitive if search contains uppercase
 
 -- Install packer.nvim if not installed
 local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
@@ -68,12 +63,6 @@ require('packer').startup(function(use)
   use 'junegunn/gv.vim'
   use 'windwp/nvim-autopairs'
   use 'nvim-lualine/lualine.nvim' -- Status line plugin
-
-  -- Null-ls for linters
-  use 'jose-elias-alvarez/null-ls.nvim'
-
-  -- Commenting plugin
-    use 'terrortylor/nvim-comment'
 end)
 
 -- Colorscheme setup
@@ -87,10 +76,10 @@ vim.cmd('colorscheme tokyonight') -- Set your default colorscheme here
 local lspconfig = require('lspconfig')
 
 -- Go language server
--- lspconfig.gopls.setup{}
+lspconfig.gopls.setup{}
 
 -- C/C++ language server
--- lspconfig.clangd.setup{}
+lspconfig.clangd.setup{}
 
 -- Autocompletion settings
 local cmp = require'cmp'
@@ -130,14 +119,6 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
--- Configure nvim-comment
-require('nvim_comment').setup({
-    -- Use `gcc` to comment a line in normal mode
-    -- Use `gc` to comment a selection in visual mode
-    line_mapping = "gcc",
-    operator_mapping = "gc",
-})
-
 -- Autopairs setup
 require('nvim-autopairs').setup{}
 
@@ -169,25 +150,3 @@ require('lualine').setup {
   extensions = {}
 }
 
--- Null-ls setup for linters
--- local null_ls = require("null-ls")
---
--- null_ls.setup({
---     sources = {
---         -- Golint
---         null_ls.builtins.diagnostics.golint,
---         -- Clang-Tidy
---         null_ls.builtins.diagnostics.clang_tidy,
---     },
---     on_attach = function(client)
---         if client.resolved_capabilities.document_formatting then
---             vim.cmd([[
---                 augroup LspFormatting
---                     autocmd! * <buffer>
---                     autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()
---                 augroup END
---             ]])
---         end
---     end,
--- })
---
