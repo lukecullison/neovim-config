@@ -13,6 +13,19 @@ vim.o.softtabstop = 4    -- Number of spaces tabs count for while editing
 vim.o.ignorecase = true  -- Case insensitive searching
 vim.o.smartcase = true   -- Case sensitive if search contains uppercase
 
+-- Enable line numbers
+vim.opt.number = true
+
+-- Highlight the current line number
+vim.cmd [[
+  augroup LineNumberHighlight
+    autocmd!
+    autocmd WinEnter,BufEnter * setlocal cursorline
+    autocmd WinLeave,BufLeave * setlocal nocursorline
+    highlight CursorLineNr ctermfg=Yellow guifg=Yellow
+  augroup END
+]]
+
 -- Install packer.nvim if not installed
 local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
