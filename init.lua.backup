@@ -1,3 +1,4 @@
+vim.cmd('colorscheme gruvbox') -- Set your default colorscheme here
 -- Basic settings
 vim.cmd('syntax enable')
 vim.cmd('set background=dark')
@@ -7,6 +8,23 @@ vim.o.expandtab = true   -- Use spaces instead of tabs
 vim.o.shiftwidth = 4     -- Size of an indent
 vim.o.tabstop = 4        -- Number of spaces tabs count for
 vim.o.softtabstop = 4    -- Number of spaces tabs count for while editing
+
+-- Search settings
+vim.o.ignorecase = true  -- Case insensitive searching
+vim.o.smartcase = true   -- Case sensitive if search contains uppercase
+
+-- Enable line numbers
+vim.opt.number = true
+
+-- Highlight the current line number
+vim.cmd [[
+  augroup LineNumberHighlight
+    autocmd!
+    autocmd WinEnter,BufEnter * setlocal cursorline
+    autocmd WinLeave,BufLeave * setlocal nocursorline
+    highlight CursorLineNr ctermfg=Yellow guifg=Yellow
+  augroup END
+]]
 
 -- Install packer.nvim if not installed
 local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
@@ -53,9 +71,6 @@ require('packer').startup(function(use)
   -- Golang
   use 'fatih/vim-go'
 
-  -- C/C++
-  use { 'neoclide/coc.nvim', branch = 'release' }
-
   -- Other useful plugins
   use 'nvim-lua/plenary.nvim'
   use 'nvim-telescope/telescope.nvim'
@@ -63,23 +78,71 @@ require('packer').startup(function(use)
   use 'junegunn/gv.vim'
   use 'windwp/nvim-autopairs'
   use 'nvim-lualine/lualine.nvim' -- Status line plugin
+
+  -- Null-ls for linters
+  use 'jose-elias-alvarez/null-ls.nvim'
+
+  -- Commenting plugin
+  use 'terrortylor/nvim-comment'
 end)
 
 -- Colorscheme setup
 vim.g.gruvbox_contrast_dark = 'hard'  -- Options: 'soft', 'medium', 'hard'
 vim.g.gruvbox_contrast_light = 'medium' -- Options: 'soft', 'medium', 'hard'
 vim.g.gruvbox_invert_selection = '0'
--- vim.cmd('colorscheme gruvbox') -- Set your default colorscheme here
 vim.cmd('colorscheme tokyonight') -- Set your default colorscheme here
 
 -- LSP settings
 local lspconfig = require('lspconfig')
 
--- Go language server
-lspconfig.gopls.setup{}
-
 -- C/C++ language server
 lspconfig.clangd.setup{}
+
+-- LSP setup for C/C++ (clangd)
+-- lspconfig.clangd.setup {
+--   on_attach = function(client, bufnr)
+--     -- Mappings for LSP actions
+--     local bufopts = { noremap=true, silent=true, buffer=bufnr }
+--     vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts) -- Hover to see type info
+--     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+--     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+--     vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+--   end,
+-- }
+
+-- C/C++ language server
+-- lspconfig.clangd.setup{
+--   on_attach = function(client, bufnr)
+--     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+--     local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+-- 
+--     -- Enable completion triggered by <c-x><c-o>
+--     buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+-- 
+--     -- Mappings.
+--     local opts = { noremap=true, silent=true }
+-- 
+--     -- See `:help vim.lsp.*` for documentation on any of the below functions
+--     buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+--     buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+--     buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+--     buf_set_keymap('n', 'gi', '<Cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+--     buf_set_keymap('n', '<C-k>', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+--     buf_set_keymap('n', '<leader>wa', '<Cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+--     buf_set_keymap('n', '<leader>wr', '<Cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+--     buf_set_keymap('n', '<leader>wl', '<Cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+--     buf_set_keymap('n', '<leader>D', '<Cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+--     buf_set_keymap('n', '<leader>rn', '<Cmd>lua vim.lsp.buf.rename()<CR>', opts)
+--     buf_set_keymap('n', 'gr', '<Cmd>lua vim.lsp.buf.references()<CR>', opts)
+--     buf_set_keymap('n', '<leader>ca', '<Cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+--     buf_set_keymap('n', '<leader>e', '<Cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+--     buf_set_keymap('n', '[d', '<Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+--     buf_set_keymap('n', ']d', '<Cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+--     buf_set_keymap('n', '<leader>q', '<Cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+--     buf_set_keymap('n', '<leader>so', [[<Cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>]], opts)
+--     vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
+--   end,
+-- }
 
 -- Autocompletion settings
 local cmp = require'cmp'
@@ -119,6 +182,14 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
+-- Configure nvim-comment
+require('nvim_comment').setup({
+    -- Use `gcc` to comment a line in normal mode
+    -- Use `gc` to comment a selection in visual mode
+    line_mapping = "gcc",
+    operator_mapping = "gc",
+})
+
 -- Autopairs setup
 require('nvim-autopairs').setup{}
 
@@ -149,4 +220,26 @@ require('lualine').setup {
   tabline = {},
   extensions = {}
 }
+
+-- Null-ls setup for linters
+-- local null_ls = require("null-ls")
+--
+-- null_ls.setup({
+--     sources = {
+--         -- Golint
+--         null_ls.builtins.diagnostics.golint,
+--         -- Clang-Tidy
+--         null_ls.builtins.diagnostics.clang_tidy,
+--     },
+--     on_attach = function(client)
+--         if client.resolved_capabilities.document_formatting then
+--             vim.cmd([[
+--                 augroup LspFormatting
+--                     autocmd! * <buffer>
+--                     autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()
+--                 augroup END
+--             ]])
+--         end
+--     end,
+-- })
 
