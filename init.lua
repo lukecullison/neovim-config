@@ -102,10 +102,18 @@ vim.cmd('colorscheme tokyonight') -- Set your default colorscheme here
 local lspconfig = require('lspconfig')
 
 -- Go language server
--- lspconfig.gopls.setup{}
+lspconfig.gopls.setup{}
 
 -- C/C++ language server
--- lspconfig.clangd.setup{}
+lspconfig.clangd.setup{
+  on_attach = function(client, bufnr)
+    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+    local opts = { noremap=true, silent=true }
+
+    -- Hover
+    buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  end
+}
 
 -- Autocompletion settings
 local cmp = require'cmp'
@@ -206,3 +214,4 @@ require('lualine').setup {
 --     end,
 -- })
 --
+
