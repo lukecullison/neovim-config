@@ -16,6 +16,8 @@ vim.o.smartcase = true   -- Case sensitive if search contains uppercase
 -- Enable line numbers
 vim.opt.number = true
 
+vim.api.nvim_set_keymap('i', 'jj', '<Esc>', { noremap = true, silent = true })
+
 -- Highlight the current line number
 vim.cmd [[
   augroup LineNumberHighlight
