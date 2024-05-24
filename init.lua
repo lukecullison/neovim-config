@@ -88,7 +88,7 @@ require('packer').startup(function(use)
   use 'jose-elias-alvarez/null-ls.nvim'
 
   -- Commenting plugin
-    use 'terrortylor/nvim-comment'
+  use 'terrortylor/nvim-comment'
 end)
 
 -- Colorscheme setup
@@ -112,6 +112,12 @@ lspconfig.clangd.setup{
 
     -- Hover
     buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    -- Go to definition
+    buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    -- Show references
+    buf_set_keymap('n', 'gr', '<Cmd>lua vim.lsp.buf.references()<CR>', opts)
+    -- Rename symbol
+    buf_set_keymap('n', 'rn', '<Cmd>lua vim.lsp.buf.rename()<CR>', opts)
   end
 }
 
