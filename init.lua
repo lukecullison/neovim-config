@@ -98,6 +98,19 @@ vim.g.gruvbox_invert_selection = '0'
 -- vim.cmd('colorscheme gruvbox') -- Set your default colorscheme here
 vim.cmd('colorscheme tokyonight') -- Set your default colorscheme here
 
+-- Set space as the leader key
+vim.g.mapleader = ' '
+
+-- Function to replace variable names with confirmation
+function ReplaceVar()
+  local old_var = vim.fn.input("Old variable: ")
+  local new_var = vim.fn.input("New variable: ")
+  vim.cmd("%s/\\<" .. old_var .. "\\>/" .. new_var .. "/gc")
+end
+
+-- Add a keybinding for replace with confirmation
+vim.api.nvim_set_keymap('n', '<leader>sr', ':lua ReplaceVar()<CR>', { noremap = true, silent = false })
+
 -- LSP settings
 local lspconfig = require('lspconfig')
 
