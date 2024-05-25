@@ -16,7 +16,11 @@ vim.o.smartcase = true   -- Case sensitive if search contains uppercase
 -- Enable line numbers
 vim.opt.number = true
 
+-- Use jj instead of Esc
 vim.api.nvim_set_keymap('i', 'jj', '<Esc>', { noremap = true, silent = true })
+
+-- Clipboard to copy out of neovim 
+vim.opt.clipboard = "unnamedplus"
 
 -- Highlight the current line number
 vim.cmd [[
@@ -134,6 +138,9 @@ lspconfig.clangd.setup{
   end
 }
 
+-- LSP for Clangd
+-- lspconfig.clangd.setup{}
+
 -- Autocompletion settings
 local cmp = require'cmp'
 cmp.setup({
@@ -213,7 +220,7 @@ require('lualine').setup {
 
 -- Null-ls setup for linters
 -- local null_ls = require("null-ls")
---
+-- 
 -- null_ls.setup({
 --     sources = {
 --         -- Golint
@@ -232,5 +239,3 @@ require('lualine').setup {
 --         end
 --     end,
 -- })
---
-
