@@ -1,4 +1,3 @@
-vim.cmd('colorscheme gruvbox') -- Set your default colorscheme here
 -- Basic settings
 vim.cmd('syntax enable')
 vim.cmd('set background=dark')
@@ -100,6 +99,9 @@ vim.g.gruvbox_contrast_dark = 'hard'  -- Options: 'soft', 'medium', 'hard'
 vim.g.gruvbox_contrast_light = 'medium' -- Options: 'soft', 'medium', 'hard'
 vim.g.gruvbox_invert_selection = '0'
 -- vim.cmd('colorscheme gruvbox') -- Set your default colorscheme here
+-- vim.g.tokyonight_contrast_dark = 'hard'  -- Options: 'soft', 'medium', 'hard'
+-- vim.g.tokyonight_contrast_light = 'soft' -- Options: 'soft', 'medium', 'hard'
+-- vim.g.tokyonight_invert_selection = '0'
 vim.cmd('colorscheme tokyonight') -- Set your default colorscheme here
 
 -- Set space as the leader key
