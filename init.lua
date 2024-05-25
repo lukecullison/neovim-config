@@ -77,7 +77,7 @@ require('packer').startup(function(use)
   use 'fatih/vim-go'
 
   -- C/C++
-  use { 'neoclide/coc.nvim', branch = 'release' }
+--  use { 'neoclide/coc.nvim', branch = 'release' }
 
   -- Other useful plugins
   use 'nvim-lua/plenary.nvim'
