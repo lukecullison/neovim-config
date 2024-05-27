@@ -76,9 +76,6 @@ require('packer').startup(function(use)
   -- Golang
   use 'fatih/vim-go'
 
-  -- C/C++
---  use { 'neoclide/coc.nvim', branch = 'release' }
-
   -- Other useful plugins
   use 'nvim-lua/plenary.nvim'
   use 'nvim-telescope/telescope.nvim'
@@ -86,9 +83,6 @@ require('packer').startup(function(use)
   use 'junegunn/gv.vim'
   use 'windwp/nvim-autopairs'
   use 'nvim-lualine/lualine.nvim' -- Status line plugin
-
-  -- Null-ls for linters
-  use 'jose-elias-alvarez/null-ls.nvim'
 
   -- Commenting plugin
   use 'terrortylor/nvim-comment'
@@ -123,6 +117,9 @@ local lspconfig = require('lspconfig')
 -- Go language server
 lspconfig.gopls.setup{}
 
+-- LSP for Clangd
+-- lspconfig.clangd.setup{}
+
 -- C/C++ language server
 lspconfig.clangd.setup{
   on_attach = function(client, bufnr)
@@ -139,9 +136,6 @@ lspconfig.clangd.setup{
     buf_set_keymap('n', 'rn', '<Cmd>lua vim.lsp.buf.rename()<CR>', opts)
   end
 }
-
--- LSP for Clangd
--- lspconfig.clangd.setup{}
 
 -- Autocompletion settings
 local cmp = require'cmp'
@@ -219,25 +213,3 @@ require('lualine').setup {
   tabline = {},
   extensions = {}
 }
-
--- Null-ls setup for linters
--- local null_ls = require("null-ls")
--- 
--- null_ls.setup({
---     sources = {
---         -- Golint
---         null_ls.builtins.diagnostics.golint,
---         -- Clang-Tidy
---         null_ls.builtins.diagnostics.clang_tidy,
---     },
---     on_attach = function(client)
---         if client.resolved_capabilities.document_formatting then
---             vim.cmd([[
---                 augroup LspFormatting
---                     autocmd! * <buffer>
---                     autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()
---                 augroup END
---             ]])
---         end
---     end,
--- })
