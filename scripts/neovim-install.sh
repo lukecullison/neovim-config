@@ -32,8 +32,14 @@ install_neovim() {
   # Checkout the desired version
   git checkout v0.9.5
   
+  # Build dependencies
+  make CMAKE_BUILD_TYPE=Release deps
+  
+  # Change permissions to ensure 'minilua' is executable
+  find . -name 'minilua' -exec chmod +x {} \;
+  
   # Build and install Neovim
-  sudo make CMAKE_BUILD_TYPE=Release
+  make CMAKE_BUILD_TYPE=Release
   sudo make install
   
   # Change back to the original directory
