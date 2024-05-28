@@ -33,7 +33,7 @@ install_neovim() {
   git checkout v0.9.5
   
   # Build and install Neovim
-  make CMAKE_BUILD_TYPE=Release
+  sudo make CMAKE_BUILD_TYPE=Release
   sudo make install
   
   # Change back to the original directory
