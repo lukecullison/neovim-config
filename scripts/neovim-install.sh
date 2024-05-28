@@ -15,38 +15,42 @@ install_dependencies_redhat() {
   sudo yum install -y git libtool autoconf automake cmake gcc-c++ make pkgconfig unzip curl clang clang-tools-extra
 }
 
-# Function to install Neovim in /tmp and clean up after itself
+# Function to install Neovim in the home directory, handle existing neovim directory, and clean up
 install_neovim() {
-  # Create a temporary directory
-  TMP_DIR=$(mktemp -d -t neovim-install-XXXXXX)
+  # Set the home directory
+  HOME_DIR="$HOME"
   
-  # Change to the temporary directory
-  cd "$TMP_DIR" || exit 1
+  # Set the Neovim directory path
+  NVIM_DIR="$HOME_DIR/neovim"
+  
+  # Check if the Neovim directory already exists
+  if [ -d "$NVIM_DIR" ]; then
+    # Rename the existing Neovim directory to neovim.bak
+    mv "$NVIM_DIR" "$NVIM_DIR.bak"
+    echo "Existing neovim directory moved to neovim.bak"
+  fi
+  
+  # Change to the home directory
+  cd "$HOME_DIR" || { echo "Failed to change to home directory"; exit 1; }
   
   # Clone the Neovim repository
   git clone https://github.com/neovim/neovim.git
   
-  # Change to the neovim directory
-  cd neovim || exit 1
+  # Change to the Neovim directory
+  cd neovim || { echo "Failed to change to Neovim directory"; exit 1; }
   
   # Checkout the desired version
   git checkout v0.9.5
-  
-  # Build dependencies
-  make CMAKE_BUILD_TYPE=Release deps
-  
-  # Change permissions to ensure 'minilua' is executable
-  find . -name 'minilua' -exec chmod +x {} \;
   
   # Build and install Neovim
   make CMAKE_BUILD_TYPE=Release
   sudo make install
   
-  # Change back to the original directory
-  cd -
+  # Change back to the home directory
+  cd "$HOME_DIR" || { echo "Failed to change back to the home directory"; exit 1; }
   
-  # Clean up: remove the temporary directory
-  rm -rf "$TMP_DIR"
+  # Clean up: remove the Neovim directory
+  rm -rf "$NVIM_DIR"
   
   echo "Neovim installed and temporary files cleaned up."
 }
