@@ -102,8 +102,8 @@ require('packer').startup(function(use)
   -- Bash highlighting
   use 'sheerun/vim-polyglot'
 
-    -- Add sphinx.nvim plugin
-  use 'stsewd/sphinx.nvim'
+  -- Add vim-rst plugin
+  use 'marshallward/vim-rst'
 
 end)
 
