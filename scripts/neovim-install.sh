@@ -50,7 +50,7 @@ install_neovim() {
   cd "$HOME_DIR" || { echo "Failed to change back to the home directory"; exit 1; }
   
   # Clean up: remove the Neovim directory
-  rm -rf "$NVIM_DIR"
+  sudo rm -rf "$NVIM_DIR"
   
   echo "Neovim installed and temporary files cleaned up."
 }
