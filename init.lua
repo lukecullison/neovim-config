@@ -78,11 +78,20 @@ require('packer').startup(function(use)
 
   -- Other useful plugins
   use 'nvim-lua/plenary.nvim'
-  use 'nvim-telescope/telescope.nvim'
+--  use 'nvim-telescope/telescope.nvim'
   use 'tpope/vim-fugitive'
   use 'junegunn/gv.vim'
   use 'windwp/nvim-autopairs'
   use 'nvim-lualine/lualine.nvim' -- Status line plugin
+
+  -- Install telescope.nvim
+    use {
+        'nvim-telescope/telescope.nvim',
+        requires = { {'nvim-lua/plenary.nvim'} }
+    }
+
+    -- Install telescope-fzf-native for improved sorting performance (optional)
+    use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
   -- Commenting plugin
   use 'terrortylor/nvim-comment'
@@ -124,6 +133,10 @@ vim.opt.undodir = vim.fn.stdpath('config') .. '/undo'
 
 -- Keybinding to toggle the undo tree
 vim.api.nvim_set_keymap('n', '<leader>u', ':UndotreeToggle<CR>', { noremap = true, silent = true })
+
+-- Keybindings for Telescope
+vim.api.nvim_set_keymap('n', '<leader>ff', '<cmd>Telescope find_files<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', { noremap = true, silent = true })
 
 -- LSP settings
 local lspconfig = require('lspconfig')
@@ -227,3 +240,38 @@ require('lualine').setup {
   tabline = {},
   extensions = {}
 }
+
+require('telescope').setup{
+    defaults = {
+        -- Default configuration for Telescope goes here:
+        -- config_key = value,
+        mappings = {
+            i = {
+                -- map actions.which_key to <C-h> (default: <C-/>)
+                -- actions.which_key shows the mappings for your picker,
+                -- e.g. git_{create, delete, ...}_branch for the git_branches picker
+                ["<C-h>"] = "which_key"
+            }
+        }
+    },
+    pickers = {
+        -- Default configuration for builtin pickers goes here:
+        -- picker_name = {
+        --   picker_config_key = value,
+        --   ...
+        -- }
+        -- Now the picker_config_key will be applied every time you call this
+        -- builtin picker
+    },
+    extensions = {
+        -- Your extension configuration goes here:
+        -- extension_name = {
+        --   extension_config_key = value,
+        -- }
+        -- please take a look at the readme of the extension you want to configure
+    }
+}
+
+-- To get fzf-native loaded and working with telescope, you need to call
+-- load_extension, somewhere after setup function:
+require('telescope').load_extension('fzf')
