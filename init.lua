@@ -102,9 +102,6 @@ require('packer').startup(function(use)
   -- Bash highlighting
   use 'sheerun/vim-polyglot'
 
-  -- Add vim-rst plugin
-  use 'marshallward/vim-rst'
-
 end)
 
 -- Colorscheme setup
