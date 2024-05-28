@@ -3,13 +3,6 @@
 # Exit script on any error
 set -e
 
-# Function to install rhel neovim from epel - version 0.8.0
-install_neovim_8() {
-    sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
-    sudo dnf upgrade
-    sudo dnf install neovim
-}
-
 # Function to install dependencies on Ubuntu
 install_dependencies_ubuntu() {
   sudo apt-get update
@@ -22,14 +15,34 @@ install_dependencies_redhat() {
   sudo yum install -y git libtool autoconf automake cmake gcc-c++ make pkgconfig unzip curl clang clang-tools-extra
 }
 
-# Function to install Neovim
+# Function to install Neovim in /tmp and clean up after itself
 install_neovim() {
+  # Create a temporary directory
+  TMP_DIR=$(mktemp -d -t neovim-install-XXXXXX)
+  
+  # Change to the temporary directory
+  cd "$TMP_DIR" || exit 1
+  
+  # Clone the Neovim repository
   git clone https://github.com/neovim/neovim.git
-  cd neovim
+  
+  # Change to the neovim directory
+  cd neovim || exit 1
+  
+  # Checkout the desired version
   git checkout v0.9.5
+  
+  # Build and install Neovim
   make CMAKE_BUILD_TYPE=Release
   sudo make install
-  cd ..
+  
+  # Change back to the original directory
+  cd -
+  
+  # Clean up: remove the temporary directory
+  rm -rf "$TMP_DIR"
+  
+  echo "Neovim installed and temporary files cleaned up."
 }
 
 # Function to install packer.nvim
