@@ -85,13 +85,13 @@ require('packer').startup(function(use)
   use 'nvim-lualine/lualine.nvim' -- Status line plugin
 
   -- Install telescope.nvim
-    use {
-        'nvim-telescope/telescope.nvim',
-        requires = { {'nvim-lua/plenary.nvim'} }
-    }
+  use {
+      'nvim-telescope/telescope.nvim',
+      requires = { {'nvim-lua/plenary.nvim'} }
+  }
 
-    -- Install telescope-fzf-native for improved sorting performance (optional)
-    use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+  -- Install telescope-fzf-native for improved sorting performance (optional)
+  use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
   -- Commenting plugin
   use 'terrortylor/nvim-comment'
@@ -101,6 +101,9 @@ require('packer').startup(function(use)
 
   -- Bash highlighting
   use 'sheerun/vim-polyglot'
+
+    -- Add sphinx.nvim plugin
+  use 'stsewd/sphinx.nvim'
 
 end)
 
