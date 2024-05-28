@@ -86,6 +86,13 @@ require('packer').startup(function(use)
 
   -- Commenting plugin
   use 'terrortylor/nvim-comment'
+
+  -- Undo changes across file close
+  use 'mbbill/undotree'
+
+  -- Bash highlighting
+  use 'sheerun/vim-polyglot'
+
 end)
 
 -- Colorscheme setup
@@ -110,6 +117,13 @@ end
 
 -- Add a keybinding for replace with confirmation
 vim.api.nvim_set_keymap('n', '<leader>sr', ':lua ReplaceVar()<CR>', { noremap = true, silent = false })
+
+-- Enable persistent undo
+vim.opt.undofile = true
+vim.opt.undodir = vim.fn.stdpath('config') .. '/undo'
+
+-- Keybinding to toggle the undo tree
+vim.api.nvim_set_keymap('n', '<leader>u', ':UndotreeToggle<CR>', { noremap = true, silent = true })
 
 -- LSP settings
 local lspconfig = require('lspconfig')
