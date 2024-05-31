@@ -63,6 +63,13 @@ vim.cmd([[
   augroup end
 ]])
 
+
+-- Navigate vim panes better
+vim.keymap.set('n', '<c-k>', ':wincmd k<CR>')
+vim.keymap.set('n', '<c-j>', ':wincmd j<CR>')
+vim.keymap.set('n', '<c-h>', ':wincmd h<CR>')
+vim.keymap.set('n', '<c-l>', ':wincmd l<CR>')
+
 -- Plugin management using packer.nvim
 require('packer').startup(function(use)
   -- Plugin manager
@@ -124,7 +131,19 @@ require('packer').startup(function(use)
     "ThePrimeagen/harpoon",
     branch = "harpoon2",
     requires = { {"nvim-lua/plenary.nvim"} }
-}
+  }
+
+
+  use {
+    "alexghergh/nvim-tmux-navigation",
+    config = function()
+      require('nvim-tmux-navigation').setup({})
+      vim.keymap.set("n", "<C-h>", "<Cmd>NvimTmuxNavigateLeft<CR>", {})
+      vim.keymap.set("n", "<C-j>", "<Cmd>NvimTmuxNavigateDown<CR>", {})
+      vim.keymap.set("n", "<C-k>", "<Cmd>NvimTmuxNavigateUp<CR>", {})
+      vim.keymap.set("n", "<C-l>", "<Cmd>NvimTmuxNavigateRight<CR>", {})
+    end,
+  }
 
 end)
 
@@ -221,6 +240,15 @@ cmp.setup({
   },
 })
 
+-- Configuration for vim-tmux-navigator
+vim.g.tmux_navigator_no_mappings = 1
+vim.api.nvim_set_keymap('n', '<C-h>', ':TmuxNavigateLeft<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-j>', ':TmuxNavigateDown<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-k>', ':TmuxNavigateUp<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-l>', ':TmuxNavigateRight<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-\\>', ':TmuxNavigatePrevious<CR>', { noremap = true, silent = true })
+
+-- Harpoon configuration
 local harpoon = require("harpoon")
 
 -- REQUIRED

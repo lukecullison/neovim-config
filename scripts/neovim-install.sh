@@ -6,13 +6,13 @@ set -e
 # Function to install dependencies on Ubuntu
 install_dependencies_ubuntu() {
   sudo apt-get update
-  sudo apt-get install -y git build-essential libtool libtool-bin autoconf automake cmake g++ pkg-config unzip curl clang
+  sudo apt-get install -y git build-essential libtool libtool-bin autoconf automake cmake g++ pkg-config unzip curl clang ripgrep tmux
 }
 
 # Function to install dependencies on Red Hat-based systems
 install_dependencies_redhat() {
   sudo yum groupinstall -y 'Development Tools'
-  sudo yum install -y git libtool autoconf automake cmake gcc-c++ make pkgconfig unzip curl clang clang-tools-extra
+  sudo yum install -y git libtool autoconf automake cmake gcc-c++ make pkgconfig unzip curl clang clang-tools-extra ripgrep tmux
 }
 
 # Function to install Neovim in the home directory, handle existing neovim directory, and clean up
