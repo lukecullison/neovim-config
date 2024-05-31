@@ -21,6 +21,23 @@ vim.api.nvim_set_keymap('i', 'jj', '<Esc>', { noremap = true, silent = true })
 -- Clipboard to copy out of neovim 
 vim.opt.clipboard = "unnamedplus"
 
+-- Remap yy to copy to the system clipboard as well
+vim.api.nvim_set_keymap('n', 'yy', ':let @+=@0<CR>yy', { noremap = true, silent = true })
+
+-- Enable reStructuredText formatting settings
+vim.g.rst_style = 1
+
+-- Enable dynamic 'formatexpr' for R and reStructuredText
+vim.g.rrst_dynamic_comments = 1
+
+-- Optionally, you can add specific settings for reStructuredText files
+vim.cmd [[
+  augroup rst
+    autocmd!
+    autocmd FileType rst setlocal expandtab shiftwidth=4 softtabstop=4 tabstop=8
+  augroup END
+]]
+
 -- Highlight the current line number
 vim.cmd [[
   augroup LineNumberHighlight
@@ -64,6 +81,7 @@ require('packer').startup(function(use)
   use 'kaicataldo/material.vim'
   use 'tomasiser/vim-code-dark'
   use 'haishanh/night-owl.vim'
+  use { "catppuccin/nvim", as = "catppuccin" }
 
   -- LSP and autocompletion
   use 'neovim/nvim-lspconfig'
@@ -102,6 +120,12 @@ require('packer').startup(function(use)
   -- Bash highlighting
   use 'sheerun/vim-polyglot'
 
+  use {
+    "ThePrimeagen/harpoon",
+    branch = "harpoon2",
+    requires = { {"nvim-lua/plenary.nvim"} }
+}
+
 end)
 
 -- Colorscheme setup
@@ -112,7 +136,10 @@ vim.g.gruvbox_invert_selection = '0'
 -- vim.g.tokyonight_contrast_dark = 'hard'  -- Options: 'soft', 'medium', 'hard'
 -- vim.g.tokyonight_contrast_light = 'soft' -- Options: 'soft', 'medium', 'hard'
 -- vim.g.tokyonight_invert_selection = '0'
-vim.cmd('colorscheme tokyonight') -- Set your default colorscheme here
+-- vim.cmd('colorscheme tokyonight') -- Set your default colorscheme here
+
+-- Set the color scheme
+vim.cmd('colorscheme catppuccin')
 
 -- Set space as the leader key
 vim.g.mapleader = ' '
@@ -193,6 +220,24 @@ cmp.setup({
     { name = 'buffer' },
   },
 })
+
+local harpoon = require("harpoon")
+
+-- REQUIRED
+harpoon:setup()
+-- REQUIRED
+
+vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
+vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+
+vim.keymap.set("n", "<C-h>", function() harpoon:list():select(1) end)
+vim.keymap.set("n", "<C-t>", function() harpoon:list():select(2) end)
+vim.keymap.set("n", "<C-n>", function() harpoon:list():select(3) end)
+vim.keymap.set("n", "<C-s>", function() harpoon:list():select(4) end)
+
+-- Toggle previous & next buffers stored within Harpoon list
+vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
+vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
 
 -- Treesitter setup
 require'nvim-treesitter.configs'.setup {
