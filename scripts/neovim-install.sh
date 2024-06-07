@@ -53,6 +53,22 @@ install_neovim() {
   sudo rm -rf "$NVIM_DIR"
   
   echo "Neovim installed and temporary files cleaned up."
+  
+  # Set the fzf directory
+  FZF_DIR="$HOME/.fzf"
+  
+  # Clone the fzf repository
+  if [ -d "$FZF_DIR" ]; then
+      echo "fzf is already installed in $FZF_DIR"
+  else
+      echo "Cloning fzf repository..."
+      git clone --depth 1 https://github.com/junegunn/fzf.git "$FZF_DIR"
+  fi
+  
+  # Install fzf
+  echo "Installing fzf..."
+  "$FZF_DIR/install" --key-bindings --completion --update-rc
+
 }
 
 # Function to install packer.nvim
